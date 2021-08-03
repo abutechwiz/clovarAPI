@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const url = 'mongodb+srv://clovarUser:8531967660@clovar.kzcmn.mongodb.net/clovarDb?retryWrites=true&w=majority';
+const url = 'mongodb://localhost:27017/clovarDB';
 const PORT = process.env.PORT || 3000;
 
 const app = express()
@@ -20,8 +20,18 @@ app.use(function(req, res, next) {
     next()
 })
 
-const Router = require('./routes/userRoute')
-app.use('/users', Router)
+const userRouting = require('./routes/userRoute')
+
+const orderRouting = require('./routes/orderRoute')
+
+const testRouting = require("./routes/testRoute")
+
+
+
+app.use('/orders',orderRouting);
+app.use('/users', userRouting);
+app.use("/tests", testRouting)
+
 
 app.listen(PORT, () => {
     console.log('Server Started')
